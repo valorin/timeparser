@@ -1,0 +1,22 @@
+{
+    "name": "valorin/timeparser",
+    "description": "Simple PHP class for parsing time values entered by users in a wide range of formats.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stephen Rees-Carter",
+            "email": "stephen@rees-carter.net"
+        }
+    ],
+    "require": {
+
+    },
+    "require-dev": {
+        "php": ">=5.3.0",
+        "jakub-onderka/php-console-highlighter": "*",
+        "jakub-onderka/php-parallel-lint": "*",
+        "phpmd/phpmd": "*",
+        "phpunit/phpunit": "*",
+        "squizlabs/php_codesniffer": "*"
+    }
+}
