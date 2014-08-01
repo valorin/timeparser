@@ -89,6 +89,11 @@ class TimeParser
         // Clean matches
         array_shift($matches);
 
+        while (count($matches) < 4) {
+            $matches[] = '';
+        }
+
+        // Clean up numbers and add trailing 0's
         if (is_numeric($matches[1]) && strlen($matches[1]) == 1) {
             $matches[1] .= 0;
         }
