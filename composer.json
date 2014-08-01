@@ -8,13 +8,19 @@
             "email": "stephen@rees-carter.net"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Valorin\\TimeParser\\": "src/"
+        }
+    },
     "require": {
-
+        "nesbot/Carbon": "*"
     },
     "require-dev": {
         "php": ">=5.3.0",
         "jakub-onderka/php-console-highlighter": "*",
         "jakub-onderka/php-parallel-lint": "*",
+        "illuminate/support": "4.*",
         "phpmd/phpmd": "*",
         "phpunit/phpunit": "*",
         "squizlabs/php_codesniffer": "*"

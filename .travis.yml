@@ -1,0 +1,18 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
+
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install --prefer-source --no-interaction --dev
+
+script:
+  - ./vendor/bin/parallel-lint ./src
+  - ./vendor/bin/parallel-lint ./tests
+  - ./vendor/bin/phpmd ./src text codesize,controversial,design,naming,unusedcode
+  - ./vendor/bin/phpcs --standard=PSR2 ./src
+  - ./vendor/bin/phpunit
