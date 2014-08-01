@@ -17,7 +17,7 @@
         "nesbot/Carbon": "*"
     },
     "require-dev": {
-        "php": ">=5.3.0",
+        "php": ">=5.4.0",
         "jakub-onderka/php-console-highlighter": "*",
         "jakub-onderka/php-parallel-lint": "*",
         "illuminate/support": "4.*",
