@@ -57,12 +57,14 @@ class TimeParser
         $components = $this->explode($rawTime);
 
         // Attempt to parse simple 12-hour times
-        $time = $this->parseTwelveHour($components);
-
-        if ($time) {
+        if ($time = $this->parseTwelveHour($components)) {
             return $time->format(self::$format);
         }
 
+        // Attempt to parse simple 24-hour times
+        if ($time = $this->parseTwentyFourHour($components)) {
+            return $time->format(self::$format);
+        }
 
         // Throw exception if we can't parse it.
         throw new TimeParserException(self::EXCEPTION.$rawTime);
@@ -125,25 +127,24 @@ class TimeParser
                 $components[0] += 12;
             }
 
-            // Expecting Minutes in #1
-            if ($this->numericBetween($components[1], 0, 59)) {
-
-                // Expecting Seconds in #2
-                if ($this->numericBetween($components[2], 0, 59)) {
-
-                    // Full time provided
-                    return Carbon::now()->hour($components[0])->minute($components[1])->second($components[2]);
-                }
-
-                // Hours and minutes provided
-                return Carbon::now()->hour($components[0])->minute($components[1])->second(0);
-            }
-
-            // Only hours provided
-            return Carbon::now()->hour($components[0])->minute(0)->second(0);
+            return $this->checkMinuteSecond($components[0], $components[1], $components[2]);
         }
 
-        var_dump($components);
+        throw new TimeParserException(self::EXCEPTION.json_encode($components));
+    }
+
+    /**
+     * Parses simple 24-hour time stamps
+     *
+     * @param  array $components
+     * @return Carbon
+     */
+    protected function parseTwentyFourHour($components)
+    {
+        // Expecting hours in #0
+        if ($this->numericBetween($components[0], 1, 23)) {
+            return $this->checkMinuteSecond($components[0], $components[1], $components[2]);
+        }
     }
 
     /**
@@ -157,5 +158,33 @@ class TimeParser
     protected function numericBetween($value, $min, $max)
     {
         return is_numeric($value) && $value >= $min && $value <= $max;
+    }
+
+    /**
+     * Simple Minute-Second handler
+     *
+     * @param  integer $hour
+     * @param  integer $minute
+     * @param  integer $second
+     * @return Carbon
+     */
+    protected function checkMinuteSecond($hour, $minute, $second)
+    {
+        // Expecting Minutes in #1
+        if ($this->numericBetween($minute, 0, 59)) {
+
+            // Expecting Seconds in #2
+            if ($this->numericBetween($second, 0, 59)) {
+
+                // Full time provided
+                return Carbon::now()->hour($hour)->minute($minute)->second($second);
+            }
+
+            // Hours and minutes provided
+            return Carbon::now()->hour($hour)->minute($minute)->second(0);
+        }
+
+        // Only hours provided
+        return Carbon::now()->hour($hour)->minute(0)->second(0);
     }
 }

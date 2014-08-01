@@ -24,17 +24,17 @@ class InvalidTimeTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException Valorin\TimeParser\TimeParserException
      */
-    public function testBadPostfix()
+    public function testNotATime()
     {
-        TimeParser::parse("10:12 XYZ");
+        TimeParser::parse("not a time");
     }
 
     /**
      * @expectedException Valorin\TimeParser\TimeParserException
      */
-    public function testNotATime()
+    public function testInvalidAM()
     {
-        TimeParser::parse("not a time");
+        TimeParser::parse("13:00 AM");
     }
 
     /**
@@ -51,5 +51,21 @@ class InvalidTimeTest extends \PHPUnit_Framework_TestCase
     public function testFourNumbers()
     {
         TimeParser::parse("1:2:3:4");
+    }
+
+    /**
+     * @expectedException Valorin\TimeParser\TimeParserException
+     */
+    public function testTooHighHours()
+    {
+        TimeParser::parse("27:29");
+    }
+
+    /**
+     * @expectedException Valorin\TimeParser\TimeParserException
+     */
+    public function testTooHighMinutes()
+    {
+        TimeParser::parse("12:69");
     }
 }
