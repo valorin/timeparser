@@ -101,4 +101,14 @@ class TwelveHourTest extends \PHPUnit_Framework_TestCase
         $actual   = TimeParser::parse("4.4.4 am");
         $this->assertEquals($expected, $actual);
     }
+
+    public function testEnsure12PMisNoon()
+    {
+        $format = TimeParser::FORMAT24;
+        TimeParser::setFormat($format);
+        $expected = Carbon::now()->hour(12)->minute(0)->format($format);
+
+        $actual   = TimeParser::parse("12pm");
+        $this->assertEquals($expected, $actual);
+    }
 }

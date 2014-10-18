@@ -123,7 +123,7 @@ class TimeParser
         if ($this->numericBetween($components[0], 1, 12)) {
 
             // Increment hours if PM
-            if (Str::startsWith($components[3], 'p')) {
+            if (Str::startsWith($components[3], 'p') && $components[0] < 12) {
                 $components[0] += 12;
             }
 

@@ -6,10 +6,10 @@ Simple PHP class for parsing time values entered by users in a wide range of for
 Installation
 -----------
 
-Add to your `composer.json` file:
+Install with composer:
 
 ```
-"valorin/timeparser" : "*"
+composer require valorin/timeparser
 ```
 
 Usage
